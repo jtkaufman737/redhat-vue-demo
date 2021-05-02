@@ -7,6 +7,8 @@
 import Gallery from '@/views/Gallery'
 
 export default {
-  components: ['Gallery']
+  components: {
+    Gallery: 'Gallery'
+  }
 }
 </script>
