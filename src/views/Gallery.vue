@@ -10,24 +10,22 @@
       <textarea v-model="description"></textarea>
     </div>
     <div v-else>
-      <p>{{ description }}</p>
+      {{ description }}
     </div>
-    <h4>Regions Our Pokemon Came From</h4>
+    <h4>Regions our Pokemon are from</h4>
     <ul>
       <li
         :id="region"
         v-for="region in regions"
-        @mouseover="addRegionColor(region, buttonColors[region])"
+        @mouseover="addRegionColor(region)"
         @mouseleave="clearRegionColor(region)"
-      >
-      {{ region }}
-      </li>
+      >{{ region }}</li>
     </ul>
     <h4>Gallery</h4>
     <div id="main">
       <div class="grid">
-        <div class="card" v-for="pokemon in pokemon">
-          <img :src="pokemon.img" @click="removePokemon(pokemon.id)"/>
+        <div class="card" v-for="pokemon in pokemon" @click="removePokemon(pokemon.id)">
+          <img :src="pokemon.img"/>
         </div>
       </div>
     </div>
@@ -36,41 +34,41 @@
 
 <script>
 import store from '@/store';
-import { mapState } from 'vuex';
 
 export default {
   name: 'Gallery',
   data() {
     return {
-      editable: true,
-      description: 'Test description of gallery',
+      editable: false,
+      description:"Test description of gallery",
       regions: ["Johto", "Kanto", "Sinoh", "Hoenn"],
-      buttonColors:{
-        Johto:"#27c476",
-        Kanto:"#27c4bc",
+      buttonColors: {
+        Johto: "#27c476",
+        Kanto: "#27c4bc",
         Sinoh: "#27a5c4",
         Hoenn: "#757cfa",
       }
     }
   },
-  computed: {
-    ...mapState(['pokemon']),
-  },
   methods: {
     toggleEditable() {
-      this.editable = !this.editable;
+      this.editable = !this.editable
     },
-    addRegionColor(id, color) {
-      document.getElementById(id).style.backgroundColor = color;
+    addRegionColor(region) {
+      document.getElementById(region).style.backgroundColor = this.buttonColors[region];
     },
-    clearRegionColor(id) {
-      document.getElementById(id).style.backgroundColor = "white";
+    clearRegionColor(region) {
+      document.getElementById(region).style.backgroundColor = "";
     },
     removePokemon(id) {
-      console.log("Remove pokemon running with id " + id)
-      store.dispatch('runDeletePokemon', id);
+      store.dispatch('runRemovePokemon', id);
     }
   },
+  computed: {
+    pokemon() {
+      return store.state.pokemon
+    }
+  }
 }
 </script>
 <style scoped>

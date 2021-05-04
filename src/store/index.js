@@ -18,24 +18,19 @@ export default new Vuex.Store({
       { id: 10, name: "Pidgey", img: "https://i.imgur.com/Rgc0OHA.png" },
       { id: 11, name: "Bulbasaur", img: "https://i.imgur.com/e7VtLbo.png" },
       { id: 12, name: "Jigglypuff", img: "https://i.imgur.com/SU7yF1f.png" }
-
     ]
   },
   mutations: {
-    deletePokemon: (state, id) => {
-      state.pokemon = state.pokemon.filter(pokemon => {
-        return pokemon.id != id;
+    removePokemon: (state, id) => {
+      state.pokemon = state.pokemon.filter(p => {
+        return p.id != id;
       })
-
-      console.log(state.pokemon)
-    },
-  },
-  actions: {
-    runDeletePokemon: ({ commit }, id) => {
-      console.log("Action running")
-      commit('deletePokemon', id);
     }
   },
-  modules: {
-  }
+  actions: {
+    runRemovePokemon: ({ commit }, id) => {
+      commit("removePokemon", id);
+    }
+  },
+  modules: {}
 })
